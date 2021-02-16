@@ -1,0 +1,44 @@
+variables:
+  org_name: 'ahanonline'
+  app_name: 'portal-api'
+  docker_registry: 'registry.ahanonline.com'
+
+stages:
+  - deploy_master
+  - deploy_release
+  - deploy_develop
+
+before_script:
+  - docker login $docker_registry -u=$docker_user -p=$docker_pass
+  - echo $CI_JOB_ID > ./buildInfo/buildNumber
+  - date +"%Y-%m-%d  %H:%M" > ./buildInfo/buildTime
+  - echo $CI_COMMIT_MESSAGE > ./buildInfo/lastCommitMessage
+
+after_script:
+  - docker logout $docker_registry
+  - docker image prune -f
+  - docker container prune -f
+
+deploy_on_master:
+  stage: deploy_master
+  only:
+    - master
+  script:
+    - docker build . -f Dockerfile.prod -t $docker_registry/$org_name-$app_name:latest  --build-arg database_test_name=$DATABASE_TEST_NAME --build-arg database_username=$DATABASE_USERNAME --build-arg database_password=$DATABASE_PASSWORD --build-arg database_host=$DATABASE_HOST --build-arg database_port=$DATABASE_PORT
+    - docker push $docker_registry/$org_name-$app_name:latest
+
+deploy_on_release:
+  stage: deploy_release
+  only:
+    - release
+  script:
+    - docker build . -f Dockerfile.rc -t $docker_registry/$org_name-$app_name:rc --build-arg database_test_name=$DATABASE_TEST_NAME --build-arg database_username=$DATABASE_USERNAME --build-arg database_password=$DATABASE_PASSWORD --build-arg database_host=$DATABASE_HOST --build-arg database_port=$DATABASE_PORT
+    - docker push $docker_registry/$org_name-$app_name:rc
+
+deploy_on_develop:
+  stage: deploy_develop
+  only:
+    - develop
+  script:
+    - docker build . -f Dockerfile.dev -t $docker_registry/$org_name-$app_name:dev --build-arg database_test_name=$DATABASE_TEST_NAME --build-arg database_username=$DATABASE_USERNAME --build-arg database_password=$DATABASE_PASSWORD --build-arg database_host=$DATABASE_HOST --build-arg database_port=$DATABASE_PORT
+    - docker push $docker_registry/$org_name-$app_name:dev

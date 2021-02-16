@@ -1,0 +1,51 @@
+# --- Base App ---
+FROM registry.ahanonline.com/node:lts-alpine AS base
+
+# Initialize directory
+RUN mkdir -p /app
+WORKDIR /app
+
+# Populate variables
+ARG database_host
+ARG database_port
+ARG database_username
+ARG database_password
+ARG database_test_name
+ENV DATABASE_HOST=$database_host
+ENV DATABASE_PORT=$database_port
+ENV DATABASE_USERNAME=$database_username
+ENV DATABASE_PASSWORD=$database_password
+ENV DATABASE_TEST_NAME=$database_test_name
+ENV NODE_ENV=test
+
+# Install dependencies
+COPY package.json .
+RUN npm install --quiet --no-progress
+
+COPY src src
+COPY buildInfo buildInfo
+COPY migration migration
+COPY fixtures fixtures
+COPY nest-cli.json .
+COPY .eslintrc.js .
+COPY tsconfig.build.json .
+COPY tsconfig.json .
+COPY test test
+
+RUN npm run lint && npm run test && npm run test:e2e
+
+# --------------------------------------
+
+# --- Release ---
+FROM base AS release
+
+# Build app
+RUN npm run build
+
+# remove unnecessary files
+RUN rm -rf src
+
+# copy main files
+EXPOSE 1337
+
+CMD [ "npm", "run", "start:prod"]
