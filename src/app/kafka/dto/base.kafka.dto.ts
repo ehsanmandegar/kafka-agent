@@ -1,12 +1,8 @@
-export interface BaseKafkaConnectDto<TableDto> {
-  properties: BaseKafkaConnectPropertiesDto<TableDto>;
-  title: string;
-  type: any;
-}
+import { Operation } from '../enum/operation.enum';
 
-interface BaseKafkaConnectPropertiesDto<TableDto> {
-  after: TableDto;
-  before: TableDto;
-  op: string;
-  source: any;
+export interface BaseKafkaDto<T> {
+  before: T;
+  after: T;
+  op: Operation;
+  ts_ms: number;
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @Index(
   'myindex',
@@ -20,7 +20,7 @@ import { Column, Entity, Index } from 'typeorm';
 )
 @Entity('mykardex', { schema: 'dbo' })
 export class Mykardex {
-  @Column('int', { name: 'pkfStoreHouseDetail' })
+  @PrimaryColumn('int', { name: 'pkfStoreHouseDetail' })
   pkfStoreHouseDetail: number;
 
   @Column('decimal', { name: 'import1', precision: 18, scale: 2 })

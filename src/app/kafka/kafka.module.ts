@@ -1,6 +1,5 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { KafkaService } from './kafka.service';
-import { TestSubscriber } from './subscribers/test.subscriber';
 
 @Global()
 @Module({})
@@ -16,7 +15,6 @@ export class KafkaModule {
           useValue: new KafkaService(kafkaConfig),
         },
       ],
-      controllers: [TestSubscriber],
       exports: [KafkaService],
     };
   }

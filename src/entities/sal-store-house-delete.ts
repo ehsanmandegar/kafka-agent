@@ -1,8 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('salStoreHouseDelete', { schema: 'dbo' })
 export class SalStoreHouseDelete {
-  @Column('int', { name: 'pkfStoreHouse' })
+  @PrimaryColumn('int', { name: 'pkfStoreHouse' })
   pkfStoreHouse: number;
 
   @Column('int', { name: 'serial' })

@@ -1,8 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('genForm2', { schema: 'dbo' })
 export class GenForm2 {
-  @Column('int', { name: 'pkfForm' })
+  @PrimaryColumn('int', { name: 'pkfForm' })
   pkfForm: number;
 
   @Column('nvarchar', { name: 'formName', length: 50 })

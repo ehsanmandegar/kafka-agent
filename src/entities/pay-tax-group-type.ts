@@ -1,7 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('payTaxGroupType', { schema: 'dbo' })
 export class PayTaxGroupType {
+  @PrimaryColumn()
+  fakeId: number;
+
   @Column('int', { name: 'pkfTaxGroupType' })
   pkfTaxGroupType: number;
 

@@ -1,11 +1,11 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('mystore', { schema: 'dbo' })
 export class Mystore {
   @Column('int', { name: 'FkfPerformaDetail', nullable: true })
   fkfPerformaDetail: number | null;
 
-  @Column('int', { name: 'pkfStoreHouse' })
+  @PrimaryColumn('int', { name: 'pkfStoreHouse' })
   pkfStoreHouse: number;
 
   @Column('bigint', { name: 'VirtualKaredex' })

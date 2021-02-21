@@ -1,8 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('Order2', { schema: 'dbo' })
 export class Order2 {
-  @Column('int', { name: 'OrderID', nullable: true })
+  @PrimaryColumn('int', { name: 'OrderID' })
   orderId: number | null;
 
   @Column('int', { name: 'OrderRow', nullable: true })

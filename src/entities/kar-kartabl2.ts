@@ -1,8 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('karKartabl2', { schema: 'dbo' })
 export class KarKartabl2 {
-  @Column('int', { name: 'pkfKartabl' })
+  @PrimaryColumn('int', { name: 'pkfKartabl' })
   pkfKartabl: number;
 
   @Column('int', { name: 'parentFkfKartabl', nullable: true })

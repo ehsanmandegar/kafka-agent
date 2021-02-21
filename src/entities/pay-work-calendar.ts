@@ -1,8 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('payWorkCalendar', { schema: 'dbo' })
 export class PayWorkCalendar {
-  @Column('int', { name: 'pkfWorkCalendar' })
+  @PrimaryColumn('int', { name: 'pkfWorkCalendar' })
   pkfWorkCalendar: number;
 
   @Column('nvarchar', { name: 'fld_monthInt', length: 2 })

@@ -1,7 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('OrderListEidtType2', { schema: 'dbo' })
 export class OrderListEidtType2 {
+  @PrimaryColumn()
+  fakeId: number;
+
   @Column('int', { name: 'OrderListEidtTypeID' })
   orderListEidtTypeId: number;
 

@@ -1,7 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('systranschemas', { schema: 'dbo' })
 export class Systranschemas {
+  @PrimaryColumn()
+  fakeId: number;
+
   @Column('int', { name: 'tabid' })
   tabid: number;
 
